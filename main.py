@@ -4,7 +4,7 @@ from core.logger import app_logger as logger
 from config import cnf
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":   
     try:
         uvicorn.run(
             app='core.app:app',
