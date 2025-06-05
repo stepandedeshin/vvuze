@@ -8,7 +8,7 @@ from services.user.dao import UsersDAO
 
 
 def get_token(request: Request):
-    token = request.cookies.get("booking_access_token")
+    token = request.cookies.get("active_token")
     if not token:
         raise APIException.TokenAbsentException
     return token
