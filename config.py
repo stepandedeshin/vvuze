@@ -5,6 +5,7 @@ class App(BaseSettings):
     HASHING_ALGORITHM: str
     HOST: str
     PORT: int
+    AI_API_KEY: str
 
     class Config:
         env_prefix = 'APP_'
