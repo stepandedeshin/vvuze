@@ -3,9 +3,8 @@ from typing import Optional
 from pydantic import BaseModel
 
     
-class SMessages(BaseModel):
+class SChats(BaseModel):
+    id: int
     user_from: int
     user_to: int
-    text: Optional[str] = None
-    media_url: Optional[str] = None
 

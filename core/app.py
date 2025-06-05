@@ -7,6 +7,7 @@ from core.logger import app_logger as logger
 from services.user.router import router as router_users
 from services.auth.router import router as router_auth
 from services.ai.router import router as router_ai
+from services.chat.router import router as router_chats
 
 
 @asynccontextmanager
@@ -27,6 +28,8 @@ app = FastAPI(
 app.include_router(router_auth)
 app.include_router(router_users)
 app.include_router(router_ai)
+app.include_router(router_chats)
+
 
 origins = [
     "http://127.0.0.1:7000",

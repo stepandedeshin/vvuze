@@ -9,8 +9,7 @@ class Messages(Base):
     __tablename__ = 'messages'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_from = Column(Integer, ForeignKey('users.id'))
-    user_to = Column(Integer, ForeignKey('users.id'))
+    chat_id = Column(Integer, ForeignKey('chats.id'))
     text = Column(String, default=None)
     media_url = Column(String, default=None)
     date = Column(DateTime, default=datetime.now())
