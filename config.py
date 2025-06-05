@@ -12,6 +12,17 @@ class App(BaseSettings):
         extra = 'ignore'
 
 
+class JwtToken(BaseSettings):
+    SECRET_KEY: str
+    ALGORITHM: str
+    
+    class Config:
+        env_prefix = 'JWT_'
+        env_file = '.env'
+        extra = 'ignore'
+
+    
+
 class PSQL(BaseSettings):
     HOST: str 
     PORT: str
@@ -48,6 +59,6 @@ class Settings(BaseSettings):
     app: App = App()
     psql: PSQL = PSQL()
     redis: Redis = Redis()
-
+    jwt_token: JwtToken = JwtToken()
 
 cnf = Settings()

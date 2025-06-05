@@ -6,6 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.logger import app_logger as logger
 
 
+from services.user.router import router_auth, router_users
+
+
 @asynccontextmanager
 async def fastapi_lifespan(app: FastAPI):
 
@@ -20,6 +23,11 @@ app = FastAPI(
     title="VVuze",
     lifespan=fastapi_lifespan
 )
+
+app.include_router(router_auth)
+app.include_router(router_users)
+
+
 
 origins = [
     "http://127.0.0.1:7000",
