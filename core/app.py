@@ -4,9 +4,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from core.logger import app_logger as logger
-
-
-from services.user.router import router_auth, router_users
+from services.user.router import router as router_users
+from services.auth.router import router as router_auth
+from services.ai.router import router as router_ai
 
 
 @asynccontextmanager
@@ -26,8 +26,7 @@ app = FastAPI(
 
 app.include_router(router_auth)
 app.include_router(router_users)
-
-
+app.include_router(router_ai)
 
 origins = [
     "http://127.0.0.1:7000",

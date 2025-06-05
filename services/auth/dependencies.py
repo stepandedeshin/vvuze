@@ -1,10 +1,11 @@
 from datetime import datetime, timezone
+
 from fastapi import Depends, Request
 from jose import jwt, JWTError
 
 from config import cnf
 from exceptions import APIException
-from services.user.dao import UsersDAO 
+from services.auth.dao import UsersDAO 
 
 
 def get_token(request: Request):
@@ -12,6 +13,7 @@ def get_token(request: Request):
     if not token:
         raise APIException.TokenAbsentException
     return token
+
 
 async def get_current_user(token: str = Depends(get_token)):
     try:

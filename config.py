@@ -16,6 +16,7 @@ class App(BaseSettings):
 class JwtToken(BaseSettings):
     SECRET_KEY: str
     ALGORITHM: str
+    TOKEN_EXPIRE_MINUTES: int
     
     class Config:
         env_prefix = 'JWT_'
@@ -23,7 +24,6 @@ class JwtToken(BaseSettings):
         extra = 'ignore'
 
     
-
 class PSQL(BaseSettings):
     HOST: str 
     PORT: str

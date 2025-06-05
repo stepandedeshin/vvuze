@@ -4,7 +4,7 @@ from langchain_gigachat.chat_models import GigaChat
 from config import cnf
 
 
-def request(text):
+def answer(text) -> str | list[str | dict] | None:
     giga = GigaChat(
         credentials=cnf.app.AI_API_KEY,
         verify_ssl_certs=False,
@@ -19,6 +19,7 @@ def request(text):
     
     messages.append(HumanMessage(content=text))
     res = giga.invoke(messages)
-    messages.append(res)
-    print(res.content)
+    if res.content:
+        return res.content
+    return None
     
