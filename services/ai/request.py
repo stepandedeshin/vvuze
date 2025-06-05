@@ -22,4 +22,3 @@ def request(text):
     messages.append(res)
     print(res.content)
     
-print(request('кто такой гребенюк'))

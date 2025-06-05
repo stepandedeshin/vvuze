@@ -37,8 +37,8 @@ async def register_user(response: Response, user_data: SUserAuth):
     access_token = create_access_token({"sub": str(user.id)})
     response.set_cookie("active_token", access_token, httponly=True)
     return {"access_token": access_token}
- 
- 
+
+
 @router_auth.post("/logout")
 async def logout_user(response: Response):
     response.delete_cookie("booking_access_token")
