@@ -7,12 +7,19 @@ from services.ai.request import answer
 from services.auth.auth import authenticate_user
 from services.ai.dao import UsagesDAO
 from exceptions import APIException
+from services.ai.data.parser import startup
 
 
 router = APIRouter(
     prefix='/ai',
     tags=['ИИ ассистент']
 )
+
+
+@router.get('/parse')
+async def start_parse():
+    startup()
+    return 'Парсинг завершен'
 
 
 @router.post('/start')

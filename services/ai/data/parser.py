@@ -17,10 +17,19 @@ class Parser:
     
     urls: dict = {
         'contacts': 'https://niu.ranepa.ru/about/kontakty/',
-        'faq': 'https://niu.ranepa.ru/vopros/'
+        'faq': 'https://niu.ranepa.ru/vopros/',
+        'yuris-fak': 'https://niu.ranepa.ru/about/fakultety/yuridicheskiy-fakultet/sotrudniki-i-kontakty/',
+        'manage-fak': 'https://niu.ranepa.ru/about/fakultety/fakultet-upravleniya/sotrudniki-i-kontakty/',
+        'eco-fak-security': 'https://niu.ranepa.ru/about/fakultety/fakultet-ekonomiki/kafedry-ef/k-eioeb/pps/',
+        'eco-fak-math': 'https://niu.ranepa.ru/about/fakultety/fakultet-ekonomiki/kafedry-ef/k-mmveiu/pps/',
+        'eco-fak-finance': 'https://niu.ranepa.ru/about/fakultety/fakultet-ekonomiki/kafedry-ef/k-fiprfr/pps/',
+        'eco-fak-lang': 'https://niu.ranepa.ru/about/fakultety/fakultet-ekonomiki/kafedry-ef/k-inyaz/pps/'
     }
     contacts: list = []
     faq: list = []
+    yuris: list = []
+    manage: list = []
+    eco: list = []
     
     def _parse(self, url: str, **params) -> list[str] | None:
         chrome_options = Options()
@@ -69,7 +78,36 @@ class Parser:
             self.faq.extend(faq)
             return self.faq
         return None
-
+    
+    def _get_yuris(self) -> list[str] | None:
+        url = self.urls['yuris-fak']
+        yuris = self._parse(url=url, tag='table', attr='table')
+        if yuris is not None:
+            self.yuris.extend(yuris)
+            return self.yuris
+        return None
+    
+    def _get_manage(self) -> list[str] | None:
+        url = self.urls['manage-fak']
+        manage = self._parse(url=url, tag='table', attr='table')
+        if manage is not None:
+            self.manage.extend(manage)
+            return self.manage
+        return None
+    
+    def _get_eco(self) -> list[str] | None:
+        urls_to_parse = []
+        for key in self.urls.keys():
+            if 'eco' in key:
+                urls_to_parse.append(self.urls[key]) 
+                
+        for url in urls_to_parse:
+            eco = self._parse(url=url, tag='table', attr='table')
+            if eco is not None:
+                self.eco.extend(eco)
+        
+        return self.eco if self.eco else None
+    
     def save_data_to_files(self) -> None:
 
         contacts = self._get_contacts()
@@ -89,6 +127,33 @@ class Parser:
             print("FAQ успешно записан в файл faq.txt.")
         else:
             print("Нет данных FAQ для записи.")
+            
+        yuris = self._get_yuris()
+        if yuris is not None:
+            with open('services/ai/data/datasets/yuris.txt', 'w', encoding='utf-8') as file:
+                for question in yuris:
+                    file.write(question + '\n\n')
+            print("yuris успешно записан в файл yuris.txt.")
+        else:
+            print("Нет данных yuris для записи.")
+            
+        manage = self._get_manage()
+        if manage is not None:
+            with open('services/ai/data/datasets/manage.txt', 'w', encoding='utf-8') as file:
+                for question in manage:
+                    file.write(question + '\n\n')
+            print("manage успешно записан в файл manage.txt.")
+        else:
+            print("Нет данных manage для записи.")
+        
+        eco = self._get_eco()
+        if eco is not None:
+            with open('services/ai/data/datasets/eco.txt', 'w', encoding='utf-8') as file:
+                for question in eco:
+                    file.write(question + '\n\n')
+            print("eco успешно записан в файл eco.txt.")
+        else:
+            print("Нет данных eco для записи.")
         return
 
 

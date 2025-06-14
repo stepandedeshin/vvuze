@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get('/{user_id}')
+@router.get('/')
 async def get_user_chats(
         user = Depends(get_current_user)
     ):
@@ -25,3 +25,12 @@ async def get_user_chats(
         chat['messages'] = messages
         chats_list.append(chat)
     return chats_list
+
+
+@router.get('/cid={chat_id}')
+async def get_chat(
+        chat_id: int,
+        user = Depends(get_current_user)
+    ):
+        messages = await MessagesDAO.find_all(chat_id=chat_id)
+        return messages

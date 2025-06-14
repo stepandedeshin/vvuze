@@ -14,7 +14,7 @@ from services.chat.router import router as router_chats
 async def fastapi_lifespan(app: FastAPI):
 
     logger.info('=== APP started ===')
-
+    
     yield
 
     logger.info('=== APP stopped ===')
